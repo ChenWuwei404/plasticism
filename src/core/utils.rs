@@ -1,4 +1,5 @@
 use std::f64::consts::PI;
+use std::ops::{Add, Mul};
 
 pub fn degree_to_rad(degree: f64) -> f64 {
     degree * PI / 180.0
@@ -65,4 +66,17 @@ pub fn oklab_to_rgb(l: f64, a: f64, b: f64, clamp: bool) -> (f64, f64, f64) {
 
 pub fn oklch_to_oklab(l: f64, c: f64, h: f64) -> (f64, f64, f64) {
     (l, c * degree_to_rad(h).cos(), c * degree_to_rad(h).sin())
+}
+
+pub trait Mix {
+    fn mix(&self, other: &Self, fac: f64) -> Self;
+}
+
+impl<T> Mix for T 
+where 
+    T: Copy + Mul<f64, Output = T> + Add<T, Output = T>,
+{
+    fn mix(&self, other: &Self, fac: f64) -> Self {
+        *self * (1.0 - fac) + *other * fac
+    }
 }

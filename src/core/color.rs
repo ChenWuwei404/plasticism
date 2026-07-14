@@ -1,4 +1,4 @@
-use crate::core::utils::{oklab_to_rgb, oklch_to_oklab};
+use crate::core::utils::{Mix, oklab_to_rgb, oklch_to_oklab};
 
 /// Generic color struct, whose fields varying from 0.0 to 1.0
 /// 
@@ -57,6 +57,22 @@ impl From<Color> for protextinator::style::FontColor {
         )
     }
 }
+impl Mix for Color {
+    fn mix(&self, other: &Self, fac: f64) -> Self {
+        if self.alpha == 0.0 {
+            return Color { r: other.r, g: other.g, b: other.b, alpha: fac * other.alpha }
+        }
+        if other.alpha == 0.0 {
+            return Color { r: self.r, g: self.g, b: self.b, alpha: (1.0 - fac) * self.alpha }
+        }
+        return Color {
+            r: self.r.mix(&other.r, fac),
+            g: self.g.mix(&other.g, fac),
+            b: self.b.mix(&other.b, fac),
+            alpha: self.alpha.mix(&other.alpha, fac),
+        }
+    }
+}
 
 /// [Oklab](https://bottosson.github.io/posts/oklab/) color, implemented `Into<T>` for
 /// `Color`, `grafo::Color` and `protextinator::style::FontColor`.
@@ -103,6 +119,22 @@ impl From<Oklab> for protextinator::style::FontColor {
             (clamped.b * 255.0) as u8,
             (clamped.alpha * 255.0) as u8,
         )
+    }
+}
+impl Mix for Oklab {
+    fn mix(&self, other: &Self, fac: f64) -> Self {
+        if self.alpha == 0.0 {
+            return Oklab { l: other.l, a: other.a, b: other.b, alpha: fac * other.alpha }
+        }
+        if other.alpha == 0.0 {
+            return Oklab { l: self.l, a: self.a, b: self.b, alpha: (1.0 - fac) * self.alpha }
+        }
+        return Oklab {
+            l: self.l.mix(&other.l, fac),
+            a: self.a.mix(&other.a, fac),
+            b: self.b.mix(&other.b, fac),
+            alpha: self.alpha.mix(&other.alpha, fac),
+        }
     }
 }
 
@@ -158,5 +190,21 @@ impl From<Oklch> for protextinator::style::FontColor {
             (clamped.b * 255.0) as u8,
             (clamped.alpha * 255.0) as u8,
         )
+    }
+}
+impl Mix for Oklch {
+    fn mix(&self, other: &Self, fac: f64) -> Self {
+        if self.alpha == 0.0 {
+            return Oklch { l: other.l, c: other.c, h: other.h, alpha: fac * other.alpha }
+        }
+        if other.alpha == 0.0 {
+            return Oklch { l: self.l, c: self.c, h: self.h, alpha: (1.0 - fac) * self.alpha }
+        }
+        return Oklch {
+            l: self.l.mix(&other.l, fac),
+            c: self.c.mix(&other.c, fac),
+            h: self.h.mix(&other.h, fac),
+            alpha: self.alpha.mix(&other.alpha, fac),
+        }
     }
 }
