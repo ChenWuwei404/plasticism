@@ -45,9 +45,14 @@ Todo processors:
 - [ ] `ButtonProcessor`
 - [ ] `DragProcessor`
 - [ ] `ScrollProcessor`
+- [ ] `InputProcessor`
 
 ### `plasticism::widget`
 
 Widgets can be composed with `atom`s, with optional children. They control event handling, layout, updating and drawing.
 
 See docs in code files for more.
+
+### `plasticism::app`
+
+Tools for creating windows and apps.
