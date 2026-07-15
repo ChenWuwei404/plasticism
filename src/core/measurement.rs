@@ -153,11 +153,21 @@ pub struct LengthRequirement {
     pub base: f64,
     pub factor: f64
 }
+impl LengthRequirement {
+    pub fn new(base: f64, factor: f64) -> Self {
+        LengthRequirement { base, factor }
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct SpaceRequirement {
     pub width: LengthRequirement,
     pub height: LengthRequirement,
+}
+impl SpaceRequirement {
+    pub fn new(width: LengthRequirement, height: LengthRequirement) -> Self {
+        SpaceRequirement { width, height }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
