@@ -35,9 +35,9 @@ impl Color {
         }
     }
 
-    const BLACK: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 1.0 };
-    const WHITE: Color = Color { r: 1.0, g: 1.0, b: 1.0, alpha: 1.0 };
-    const TRANSPARENT: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 0.0 };
+    pub const BLACK: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 1.0 };
+    pub const WHITE: Color = Color { r: 1.0, g: 1.0, b: 1.0, alpha: 1.0 };
+    pub const TRANSPARENT: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 0.0 };
 }
 impl From<Color> for grafo::Color {
     fn from(value: Color) -> Self {
@@ -95,9 +95,9 @@ impl Oklab {
         Oklab { l, a, b, alpha }
     }
 
-    const BLACK: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 1.0 };
-    const WHITE: Oklab = Oklab { l: 1.0, a: 0.0, b: 0.0, alpha: 1.0 };
-    const TRANSPARENT: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 0.0 };
+    pub const BLACK: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 1.0 };
+    pub const WHITE: Oklab = Oklab { l: 1.0, a: 0.0, b: 0.0, alpha: 1.0 };
+    pub const TRANSPARENT: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 0.0 };
 }
 impl From<Oklab> for Color {
     fn from(value: Oklab) -> Self {
@@ -163,9 +163,9 @@ impl Oklch {
         Oklch { l, c, h, alpha }
     }
 
-    const BLACK: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 1.0 };
-    const WHITE: Oklch = Oklch { l: 1.0, c: 0.0, h: 0.0, alpha: 1.0 };
-    const TRANSPARENT: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 0.0 };
+    pub const BLACK: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 1.0 };
+    pub const WHITE: Oklch = Oklch { l: 1.0, c: 0.0, h: 0.0, alpha: 1.0 };
+    pub const TRANSPARENT: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 0.0 };
 }
 impl From<Oklch> for Oklab {
     fn from(value: Oklch) -> Self {
