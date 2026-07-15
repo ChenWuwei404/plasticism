@@ -114,3 +114,33 @@ impl Size {
         Size { width, height }
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum Anchor {
+    Start,
+    #[default]
+    Center,
+    End,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
+pub struct Axis {
+    pub pos: f64,
+    pub anchor: Anchor,
+}
+impl Axis {
+    pub fn new(pos: f64, anchor: Anchor) -> Self {
+        Axis { pos, anchor }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
+pub struct Position {
+    pub x: Axis,
+    pub y: Axis,
+}
+impl Position {
+    pub fn new(x: Axis, y: Axis) -> Self {
+        Position { x, y }
+    }
+}
