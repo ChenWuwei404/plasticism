@@ -1,3 +1,7 @@
+//! Those structs are only designed to use in layout calculation and rendering.
+//! 
+//! For layout styling, see [`crate::core::layout`]
+
 use std::ops::{Add, Div, Mul, Sub};
 
 use winit::dpi::{LogicalPosition, LogicalSize};
@@ -145,6 +149,12 @@ impl From<Rect> for LogicalPosition<f64> {
 impl From<Rect> for LogicalSize<f64> {
     fn from(value: Rect) -> Self {
         LogicalSize { width: value.width, height: value.height }
+    }
+}
+/// Impl for [`grafo::Shape`]
+impl From<Rect> for [(f32, f32); 2] {
+    fn from(value: Rect) -> Self {
+        [(value.x as f32, value.y as f32), (value.width as f32, value.height as f32)]
     }
 }
 
