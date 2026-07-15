@@ -21,6 +21,15 @@ impl From<Space> for LogicalSize<f64> {
         LogicalSize { width: value.width, height: value.height }
     }
 }
+impl Mul<f64> for Space {
+    type Output = Self;
+    fn mul(self, rhs: f64) -> Self::Output {
+        Space {
+            width: self.width * rhs,
+            height: self.height * rhs,
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point {
@@ -35,6 +44,15 @@ impl Point {
 impl From<Point> for LogicalPosition<f64> {
     fn from(value: Point) -> Self {
         LogicalPosition { x: value.x, y: value.y }
+    }
+}
+impl Mul<f64> for Point {
+    type Output = Self;
+    fn mul(self, rhs: f64) -> Self::Output {
+        Point {
+            x: self.x * rhs,
+            y: self.y * rhs,
+        }
     }
 }
 
@@ -155,6 +173,17 @@ impl From<Rect> for LogicalSize<f64> {
 impl From<Rect> for [(f32, f32); 2] {
     fn from(value: Rect) -> Self {
         [(value.x as f32, value.y as f32), (value.width as f32, value.height as f32)]
+    }
+}
+impl Mul<f64> for Rect {
+    type Output = Self;
+    fn mul(self, rhs: f64) -> Self::Output {
+        Rect {
+            x: self.x * rhs,
+            y: self.y * rhs,
+            width: self.width * rhs,
+            height: self.height * rhs,
+        }
     }
 }
 

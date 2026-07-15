@@ -21,15 +21,15 @@ impl Rectangle {
     }
 }
 impl Atom for Rectangle {
-    fn draw(&self, rect: &Rect, renderer: &mut Renderer, parent_shape_id: Option<usize>) -> Result<usize, DrawCommandError> {
+    fn draw(&self, rect: &Rect, renderer: &mut Renderer, parent_shape_id: Option<usize>, scale_factor: f64) -> Result<usize, DrawCommandError> {
         let shape = if self.radii.is_empty() {
             Shape::rect(
-                (*rect).into(),
+                (*rect * scale_factor).into(),
                 Stroke { width: 0.0, color: Color::TRANSPARENT.into()}
             )
         } else {
             Shape::rounded_rect(
-                (*rect).into(),
+                (*rect * scale_factor).into(),
                 self.radii.into(),
                 Stroke { width: 0.0, color: Color::TRANSPARENT.into()}
             )
@@ -65,15 +65,15 @@ impl RectangleBorder {
     }
 }
 impl Atom for RectangleBorder {
-    fn draw(&self, rect: &Rect, renderer: &mut Renderer, parent_shape_id: Option<usize>) -> Result<usize, DrawCommandError> {
+    fn draw(&self, rect: &Rect, renderer: &mut Renderer, parent_shape_id: Option<usize>, scale_factor: f64) -> Result<usize, DrawCommandError> {
         let shape = if self.radii.is_empty() {
             Shape::rect(
-                (*rect).into(),
+                (*rect * scale_factor).into(),
                 Stroke { width: self.width as f32, color: self.color.into()}
             )
         } else {
             Shape::rounded_rect(
-                (*rect).into(),
+                (*rect * scale_factor).into(),
                 self.radii.into(),
                 Stroke { width: self.width as f32, color: self.color.into()}
             )
