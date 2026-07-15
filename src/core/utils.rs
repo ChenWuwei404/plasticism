@@ -1,5 +1,6 @@
 use std::f64::consts::PI;
 use std::ops::{Add, Mul};
+use std::collections::VecDeque;
 
 pub fn degree_to_rad(degree: f64) -> f64 {
     degree * PI / 180.0
@@ -78,5 +79,29 @@ where
 {
     fn mix(&self, other: &Self, fac: f64) -> Self {
         *self * (1.0 - fac) + *other * fac
+    }
+}
+
+#[derive(Default)]
+pub struct IdAllocator {
+    current: u64,
+    free: VecDeque<u64>,
+}
+impl IdAllocator {
+    pub fn new() -> Self {
+        IdAllocator::default()
+    }
+    pub fn allocate(&mut self) -> u64 {
+        if let Some(id) = self.free.pop_front() {
+            return id
+        }
+        let previous = self.current;
+        self.current += 1;
+        return previous
+    }
+    pub fn deallocate(&mut self, id: u64) {
+        if !self.free.contains(&id) {
+            self.free.push_back(id);
+        }
     }
 }
