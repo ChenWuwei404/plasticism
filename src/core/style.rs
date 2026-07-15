@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct Radii {
     pub top_right: f64,
     pub bottom_right: f64,
