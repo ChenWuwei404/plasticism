@@ -34,6 +34,10 @@ impl Color {
             alpha: self.alpha.clamp(0.0, 1.0),
         }
     }
+
+    const BLACK: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 1.0 };
+    const WHITE: Color = Color { r: 1.0, g: 1.0, b: 1.0, alpha: 1.0 };
+    const TRANSPARENT: Color = Color { r: 0.0, g: 0.0, b: 0.0, alpha: 0.0 };
 }
 impl From<Color> for grafo::Color {
     fn from(value: Color) -> Self {
@@ -90,6 +94,10 @@ impl Oklab {
     pub fn laba(l: f64, a: f64, b: f64, alpha: f64) -> Oklab {
         Oklab { l, a, b, alpha }
     }
+
+    const BLACK: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 1.0 };
+    const WHITE: Oklab = Oklab { l: 1.0, a: 0.0, b: 0.0, alpha: 1.0 };
+    const TRANSPARENT: Oklab = Oklab { l: 0.0, a: 0.0, b: 0.0, alpha: 0.0 };
 }
 impl From<Oklab> for Color {
     fn from(value: Oklab) -> Self {
@@ -154,6 +162,10 @@ impl Oklch {
     pub fn lcha(l: f64, c: f64, h: f64, alpha: f64) -> Oklch{
         Oklch { l, c, h, alpha }
     }
+
+    const BLACK: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 1.0 };
+    const WHITE: Oklch = Oklch { l: 1.0, c: 0.0, h: 0.0, alpha: 1.0 };
+    const TRANSPARENT: Oklch = Oklch { l: 0.0, c: 0.0, h: 0.0, alpha: 0.0 };
 }
 impl From<Oklch> for Oklab {
     fn from(value: Oklch) -> Self {
