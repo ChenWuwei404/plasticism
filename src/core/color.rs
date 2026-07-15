@@ -17,7 +17,6 @@ pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Color {
 /// let red = Color::rgb(1.0, 0.0, 0.0);
 /// 
 /// let red_grafo: grafo::Color = red.into();
-/// let red_style: protextinator::style::FontColor = red.into();
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct Color {
