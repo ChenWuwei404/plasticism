@@ -1,5 +1,12 @@
 use crate::core::utils::{Mix, oklab_to_rgb, oklch_to_oklab};
 
+pub fn rgb(r: u8, g: u8, b: u8) -> Color {
+    Color { r: r as f64 / 255.0, g: g as f64 / 255.0, b: b as f64 / 255.0, alpha: 1.0 }
+}
+pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Color {
+    Color { r: r as f64 / 255.0, g: g as f64 / 255.0, b: b as f64 / 255.0, alpha: a as f64 / 255.0 }
+}
+
 /// Generic color struct, whose fields varying from 0.0 to 1.0
 /// 
 /// # Examples
@@ -43,17 +50,6 @@ impl From<Color> for grafo::Color {
     fn from(value: Color) -> Self {
         let clamped = value.clamp();
         grafo::Color::rgba(
-            (clamped.r * 255.0) as u8,
-            (clamped.g * 255.0) as u8,
-            (clamped.b * 255.0) as u8,
-            (clamped.alpha * 255.0) as u8,
-        )
-    }
-}
-impl From<Color> for protextinator::style::FontColor {
-    fn from(value: Color) -> Self {
-        let clamped = value.clamp();
-        protextinator::style::FontColor::rgba(
             (clamped.r * 255.0) as u8,
             (clamped.g * 255.0) as u8,
             (clamped.b * 255.0) as u8,
@@ -117,18 +113,6 @@ impl From<Oklab> for grafo::Color {
         )
     }
 }
-impl From<Oklab> for protextinator::style::FontColor {
-    fn from(value: Oklab) -> Self {
-        let rgba: Color = value.into();
-        let clamped = rgba.clamp();
-        protextinator::style::FontColor::rgba(
-            (clamped.r * 255.0) as u8,
-            (clamped.g * 255.0) as u8,
-            (clamped.b * 255.0) as u8,
-            (clamped.alpha * 255.0) as u8,
-        )
-    }
-}
 impl Mix for Oklab {
     fn mix(&self, other: &Self, fac: f64) -> Self {
         if self.alpha == 0.0 {
@@ -185,18 +169,6 @@ impl From<Oklch> for grafo::Color {
         let rgba: Color = value.into();
         let clamped = rgba.clamp();
         grafo::Color::rgba(
-            (clamped.r * 255.0) as u8,
-            (clamped.g * 255.0) as u8,
-            (clamped.b * 255.0) as u8,
-            (clamped.alpha * 255.0) as u8,
-        )
-    }
-}
-impl From<Oklch> for protextinator::style::FontColor {
-    fn from(value: Oklch) -> Self {
-        let rgba: Color = value.into();
-        let clamped = rgba.clamp();
-        protextinator::style::FontColor::rgba(
             (clamped.r * 255.0) as u8,
             (clamped.g * 255.0) as u8,
             (clamped.b * 255.0) as u8,
