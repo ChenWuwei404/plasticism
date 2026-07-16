@@ -21,7 +21,13 @@ pub trait Atom: 'static {
     /// Queue draw command of current atom and get the id of the shape.
     /// 
     /// Note that shape id is **not** atom id.
-    fn draw(&self, rect: &Rect, renderer: &mut Renderer, parent_shape_id: Option<usize>, scale_factor: f64) -> Result<usize, DrawCommandError>;
+    fn draw(
+        &self,
+        rect: &Rect,
+        renderer: &mut Renderer,
+        parent_shape_id: Option<usize>,
+        scale_factor: f64
+    ) -> Result<usize, DrawCommandError>;
 }
 
 /// Due to a limitation that textures must be numbered in [`grafo`], an `u64` typed id must
@@ -46,11 +52,7 @@ pub struct AtomId {
     pub id_allocator: Arc<Mutex<IdAllocator>>,
 }
 
-pub struct AtomTextId {
-    pub text_id: u64,
-    pub text_id_allocator: Arc<Mutex<IdAllocator>>
-}
-
+#[macro_export]
 macro_rules! auto_drop {
     ($id: ident) => {
         impl Drop for $id {
@@ -64,3 +66,6 @@ macro_rules! auto_drop {
 
 mod rectangle;
 pub use rectangle::*;
+
+mod label;
+pub use label::*;
