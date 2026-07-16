@@ -1846,6 +1846,7 @@ dependencies = [
  "futures",
  "grafo",
  "log",
+ "slotmap",
  "wgpu 30.0.0",
  "winit",
 ]
