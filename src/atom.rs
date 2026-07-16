@@ -32,9 +32,8 @@ pub trait Atom: 'static {
 
 /// Due to a limitation that textures must be numbered in [`grafo`], an `u64` typed id must
 /// be given when creating a atom include texture. See [`IdAllocator`]. AtomWithTexture-structs
-/// should implement custom [`Drop`] to automatically deallocate id. Just invoke [`Atom::deallocate`]
-/// in [`Drop::drop`] with [`auto_drop`]
-/// 
+/// should implement custom [`Drop`] to automatically deallocate id. Just invoke 
+/// [`AtomWithTexture::deallocate`] in [`Drop::drop`] with [`auto_drop`].
 pub trait AtomWithTexture: Atom {
     /// Get a new id from given allocator (singleton).
     fn new(id_allocator: Arc<Mutex<IdAllocator>>) -> Self where Self: Sized;
@@ -47,6 +46,7 @@ pub trait AtomWithTexture: Atom {
     fn id_allocator(&self) -> &Arc<Mutex<IdAllocator>>;
 }
 
+/// Basic struct for [`AtomWithTexture`] structs to store id information.
 pub struct AtomId {
     pub id: u64,
     pub id_allocator: Arc<Mutex<IdAllocator>>,
@@ -60,6 +60,33 @@ macro_rules! auto_drop {
             fn drop(&mut self) {
                 self.deallocate();
             }
+        }
+    };
+}
+
+/// Generate [`AtomWithTexture::id`] and [`AtomWithTexture::id_allocator`] for atoms with `atom_id:`[`AtomId`] field.
+/// 
+/// # Example
+/// 
+/// ```no_run
+/// struct CustomAtom {
+///     atom_id: AtomId,
+///     /* other fields */
+/// }
+/// impl AtomWithTexture for CustomAtom {
+///     auto_atom_id!();
+///     /* other functions */
+/// }
+/// 
+/// ```
+#[macro_export]
+macro_rules! auto_atom_id {
+    () => {
+        fn id(&self) -> u64 {
+            self.atom_id.id
+        }
+        fn id_allocator(&self) -> &Arc<Mutex<IdAllocator>> {
+            &self.atom_id.id_allocator
         }
     };
 }
